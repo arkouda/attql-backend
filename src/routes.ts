@@ -7,7 +7,7 @@ export const Routes = [{
     method: "get",
     route: "/hierarchicalView",
     controller: HierarchicalViewController,
-    action: "getone"
+    action: "getHV"
 },
 {
     method: "get",

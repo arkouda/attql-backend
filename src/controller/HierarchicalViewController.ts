@@ -1,16 +1,22 @@
 // //import "reflect-metadata";
-// import {Get, Post, QueryParam, Req, Res} from "routing-controllers";
 import {getRepository} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {Attendance} from "../entity/Attendance";
 
-export class HierarchicalViewController {
-    
-    // @Get("/hierarchicalview")
-    // test(@QueryParam("day") day: string, @QueryParam("studid") sid: string,
-    //  @Req() request: Request, @Res() response: Response)
+type HierarchicalViewModel = {day?: number, studid?: number, count: number};
 
-    async test(request: Request, response: Response, next: NextFunction) {		
-        console.log("asdfghj");
+export class HierarchicalViewController {
+
+    private userRepository = getRepository(Attendance);
+    
+    async getHV(request: Request, response: Response) {	
+
+        var HVdata: HierarchicalViewModel[] = await this.userRepository
+                                                        .createQueryBuilder()
+                                                        .select([request.query.hflag,'count(*) as count'])
+                                                        .groupBy(request.query.hflag)
+                                                        .getRawMany();
+
+        response.end(JSON.stringify(HVdata));
     }
 }
