@@ -6,19 +6,19 @@ type HierarchicalViewDetailModel = {day?: number, studid?: number, arrivalTime: 
 
 export class HierarchicalViewDetailController {
 
-    private userRepository = getRepository(Attendance);
+    private entityRepository = getRepository(Attendance);
 
-    async getHVD(request: Request, response: Response) {	
+    async getHVD(request: Request, response: Response) {
         
         var HVDdata: HierarchicalViewDetailModel[];
         if (request.query.hflag == 'day') 
-            HVDdata = await this.userRepository
+            HVDdata = await this.entityRepository
                                 .createQueryBuilder()
                                 .select(['studid','arrivalTime','departTime'])
                                 .where('day = :d', {d: request.query.day})
                                 .getRawMany();
         else
-            HVDdata = await this.userRepository
+            HVDdata = await this.entityRepository
                                 .createQueryBuilder()
                                 .select(['day','arrivalTime','departTime'])
                                 .where('studid = :s',{s: request.query.studid})

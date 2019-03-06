@@ -7,11 +7,11 @@ type HierarchicalViewModel = {day?: number, studid?: number, count: number};
 
 export class HierarchicalViewController {
 
-    private userRepository = getRepository(Attendance);
+    private entityRepository = getRepository(Attendance);
     
     async getHV(request: Request, response: Response) {	
 
-        var HVdata: HierarchicalViewModel[] = await this.userRepository
+        var HVdata: HierarchicalViewModel[] = await this.entityRepository
                                                         .createQueryBuilder()
                                                         .select([request.query.hflag,'count(*) as count'])
                                                         .groupBy(request.query.hflag)
