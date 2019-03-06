@@ -19,7 +19,7 @@ export const Routes = [{
     method: "get",
     route: "/hierarchicalViewDetail",
     controller: HierarchicalViewDetailController,
-    action: "all"
+    action: "getHVD"
 }];
 
 // [{
