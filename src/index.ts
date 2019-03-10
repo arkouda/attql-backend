@@ -4,13 +4,15 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import {Request, Response} from "express";
 import {Routes} from "./routes";
-import {Attendance} from "./entity/Attendance";
+// import {Attendance} from "./entity/Attendance";
+import * as cors from "cors";
 
 createConnection().then(async connection => {
 
     // create express app
     const app = express();
     app.use(bodyParser.json());
+    app.use(cors());
 
     // register express routes from defined application routes
     Routes.forEach(route => {
@@ -25,21 +27,7 @@ createConnection().then(async connection => {
         });
     });
 
-    // setup express app here
-    // ...
-
-    // start express server
-    app.listen(3000);
-
-    // insert new users for test
-    // await connection.manager.save(connection.manager.create(Attendance, {
-    //     day: 888,
-    //     studid: 1,
-    //     arrivalTime: new Date(),
-    //     departTime: new Date()
-    // }));
-
-
-    console.log("Express server has started on port 3000. Open http://localhost:3000/users to see results");
+    app.listen(3001);
+    console.log("Express server has started on port 3001. Open http://localhost:3001/users to see results");
 
 }).catch(error => console.log(error));
