@@ -1,6 +1,7 @@
 import {HierarchicalViewController} from "./controller/HierarchicalViewController";
 import {HierarchicalViewDetailController} from "./controller/HierarchicalViewDetailController";
 import {TabViewController} from "./controller/TabViewController";
+import { TimelineViewController } from "./controller/TimelineViewController";
 
 export const Routes = [{
     method: "get",
@@ -19,4 +20,10 @@ export const Routes = [{
     route: "/hierarchicalViewDetail",
     controller: HierarchicalViewDetailController,
     action: "getHVD"
+},
+{
+    method: "get",
+    route: "/timelineView",
+    controller: TimelineViewController,
+    action: "getTimeline"
 }];
