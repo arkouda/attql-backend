@@ -2,19 +2,33 @@ import { getRepository, SelectQueryBuilder } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { Attendance } from "../entity/Attendance";
 
+type uniqueStudidModel = {ID: number};
+
 export class TimelineViewController {
 
     private entityRepository = getRepository(Attendance);
 
     async getTimeline(request: Request, response: Response) {
         var timelineViewData: Attendance[];
+        var offset: number = (request.query.page - 1) * request.query.limit;
+        var studidsForPageObj: uniqueStudidModel[] = await this.entityRepository
+                                                .createQueryBuilder()
+                                                .select('DISTINCT studid', 'ID')
+                                                .orderBy('studid')
+                                                .limit(request.query.limit)
+                                                .offset(offset)
+                                                .getRawMany();
+        var studidsForPage: number[] = [];
+        studidsForPageObj.forEach((studidRow: uniqueStudidModel) => {studidsForPage.push(studidRow.ID);});
         var timelineViewDataQuery: SelectQueryBuilder<Attendance> = this.entityRepository
             .createQueryBuilder("a")
             .where("a.day >= :d", { d: 0 });
-        if (request.query.dayLimit && request.query.page) {
-            timelineViewDataQuery.andWhere('a.day >= :dayLimit_gte', { dayLimit_gte: (parseInt(request.query.page) - 1) * parseInt(request.query.dayLimit) });
-            timelineViewDataQuery.andWhere('a.day <= :dayLimit_lte', { dayLimit_lte: (parseInt(request.query.page)) * parseInt(request.query.dayLimit) });
+        if (request.query.dayFrom && request.query.dayFrom && request.query.page && request.query.limit) {
+            timelineViewDataQuery.andWhere('a.day >= :dayLimit_gte', { dayLimit_gte: request.query.dayFrom });
+            timelineViewDataQuery.andWhere('a.day <= :dayLimit_lte', { dayLimit_lte: request.query.dayTo });
+            timelineViewDataQuery.andWhere('a.studid IN (:studidList)', { studidList: studidsForPage});
         }
+        // timelineViewDataQuery.andWhere('a.studid <= 10');
         var group: object = {};
         var items: object = {};
         timelineViewData = await timelineViewDataQuery.getMany();
