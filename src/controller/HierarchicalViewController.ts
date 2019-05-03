@@ -18,12 +18,12 @@ export class HierarchicalViewController {
                                                         .groupBy(request.query.hflag)
                                                         .getRawMany();
 
-        console.log(JSON.stringify(HVdata));
+        // console.log(JSON.stringify(HVdata));
 
         const modelObj = model.HierarchicalView;
         let message =  modelObj.fromObject({hierarchicalV: HVdata});
         let buffer : Uint8Array = modelObj.encode(message).finish();
-        console.log(buffer.byteLength);
+        // console.log(buffer.byteLength);
         response.setHeader("Content-Type", "application/octet-stream");
         response.write(buffer)
         response.end();

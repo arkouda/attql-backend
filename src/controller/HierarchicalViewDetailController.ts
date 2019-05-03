@@ -27,7 +27,7 @@ export class HierarchicalViewDetailController {
         const modelObj = model.HierarchicalDetailView;
         let message =  modelObj.fromObject({hierarchicalDV: HVDdata});
         let buffer : Uint8Array = modelObj.encode(message).finish();
-        console.log(buffer.byteLength);
+        // console.log(buffer.byteLength);
         response.setHeader("Content-Type", "application/octet-stream");
         response.write(buffer)
         response.end();

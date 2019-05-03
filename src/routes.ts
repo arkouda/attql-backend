@@ -1,7 +1,8 @@
-import {HierarchicalViewController} from "./controller/HierarchicalViewController";
-import {HierarchicalViewDetailController} from "./controller/HierarchicalViewDetailController";
-import {TabViewController} from "./controller/TabViewController";
+import { HierarchicalViewController } from "./controller/HierarchicalViewController";
+import { HierarchicalViewDetailController } from "./controller/HierarchicalViewDetailController";
+import { TabViewController } from "./controller/TabViewController";
 import { TimelineViewController } from "./controller/TimelineViewController";
+import { AddRecordController } from "./controller/AddRecordController";
 
 export const Routes = [{
     method: "get",
@@ -26,4 +27,10 @@ export const Routes = [{
     route: "/timelineView",
     controller: TimelineViewController,
     action: "getTimeline"
+},
+{
+    method: "get",
+    route: "/addRecord",
+    controller: AddRecordController,
+    action: "addRecord"
 }];
