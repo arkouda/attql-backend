@@ -2,11 +2,11 @@
    "type": "mysql",
    "host": "localhost",
    "port": 3306,
-   "username": "root",
-   "password": "123",
+   "username": "ak",
+   "password": "a",
    "database": "attql",
    "synchronize": false,
-   "logging": false,
+   "logging": true,
    "entities": [
       "src/entity/**/*.ts"
    ],

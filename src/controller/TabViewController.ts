@@ -34,7 +34,7 @@ export class TabViewController {
         const modelObj = model.TabView;
         let message =  modelObj.fromObject({tabV: tabViewData});
         let buffer : Uint8Array = modelObj.encode(message).finish();
-        console.log(buffer.byteLength);
+        // console.log(buffer.byteLength);
         response.setHeader("Content-Type", "application/octet-stream");
         response.write(buffer)
         response.end();

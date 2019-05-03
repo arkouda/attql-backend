@@ -52,7 +52,7 @@ export class TimelineViewController {
         const modelObj = model.TimelineView;
         let message =  modelObj.fromObject({items: itemsFinal, group: groupFinal });
         let buffer : Uint8Array = modelObj.encode(message).finish();
-        console.log(buffer.byteLength);
+        // console.log(buffer.byteLength);
         response.setHeader("Content-Type", "application/octet-stream");
         response.write(buffer)
         response.end();
