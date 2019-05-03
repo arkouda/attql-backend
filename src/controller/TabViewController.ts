@@ -1,6 +1,7 @@
 import {getRepository,SelectQueryBuilder} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {Attendance} from "../entity/Attendance";
+import { model } from "../protos/out/model";
 
 export class TabViewController {
 
@@ -29,6 +30,13 @@ export class TabViewController {
             tabViewDataQuery.andWhere('a.departTime <= :departuretime_lte', {departuretime_lte: request.query.departuretime_lte});
         tabViewDataQuery.limit(parseInt(request.query.limit)).offset(parseInt(request.query.offset));
         tabViewData = await tabViewDataQuery.getMany();
-        response.end(JSON.stringify(tabViewData));
+        
+        const modelObj = model.TabView;
+        let message =  modelObj.fromObject({tabV: tabViewData});
+        let buffer : Uint8Array = modelObj.encode(message).finish();
+        console.log(buffer.byteLength);
+        response.setHeader("Content-Type", "application/octet-stream");
+        response.write(buffer)
+        response.end();
     }
 }

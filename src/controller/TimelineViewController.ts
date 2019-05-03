@@ -1,6 +1,7 @@
 import { getRepository, SelectQueryBuilder } from "typeorm";
 import { NextFunction, Request, Response } from "express";
 import { Attendance } from "../entity/Attendance";
+import { model } from "../protos/out/model";
 
 type uniqueStudidModel = {ID: number};
 
@@ -47,6 +48,14 @@ export class TimelineViewController {
         Object.keys(items).forEach((key) => {
             itemsFinal.push({groupid: key, items: items[key]})
         });
-        response.end(JSON.stringify({ items: itemsFinal, group: groupFinal }));
+        
+        const modelObj = model.TimelineView;
+        let message =  modelObj.fromObject({items: itemsFinal, group: groupFinal });
+        let buffer : Uint8Array = modelObj.encode(message).finish();
+        console.log(buffer.byteLength);
+        response.setHeader("Content-Type", "application/octet-stream");
+        response.write(buffer)
+        response.end();
+        // response.end(JSON.stringify({ items: itemsFinal, group: groupFinal }));
     }
 }

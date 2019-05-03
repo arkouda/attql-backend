@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package model;
+
+message Attendance {
+    int32 day = 1;
+    int32 studid = 2;
+    string arrivalTime = 3;
+    string departTime = 4;
+}
+
+message TabView {
+    repeated Attendance tabV = 1;
+}
+
+// TimelineView
+message GroupItems {
+    int32 day = 1;
+    string arrivalTime = 2;
+    string departTime = 3;
+}
+
+message xxx {
+    required string groupid = 1;
+    repeated GroupItems items = 2;
+}
+
+message yyy {
+    string id = 1;
+    string content = 2;
+}
+
+message TimelineView {
+    repeated xxx items = 1;
+    repeated yyy group = 2;
+}
+
+// HierarchicalView
+
+message GroupCount {
+    oneof test_oneof {
+        int32 day = 1;
+        int32 studid = 2;
+    }
+    required string count = 3;
+}
+
+message HierarchicalView {
+    repeated GroupCount hierarchicalV = 1;
+}
+
+// HierarchicalDetailView
+
+message TimeDetail {
+    oneof test_twoof {
+        int32 day = 1;
+        int32 studid = 2;
+    }
+    required string arrivalTime = 3;
+    required string departTime = 4;
+}
+
+message HierarchicalDetailView {
+    repeated TimeDetail hierarchicalDV = 1;
+}
+
